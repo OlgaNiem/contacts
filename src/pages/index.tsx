@@ -1,7 +1,5 @@
 import React, {useState} from 'react'
 import styles from '../styles/Contacts.module.css'; 
-import Dialog, { DialogProps } from 'rc-dialog';
-
 
   type Contact = {
     name: string;
@@ -45,7 +43,7 @@ import Dialog, { DialogProps } from 'rc-dialog';
             <button onClick={addContact}>Add</button>
           </td>
         </tr>
-        
+
         <tr>
           <th>Name</th>
           <th>Phone number</th>
