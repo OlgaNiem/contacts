@@ -1,0 +1,17 @@
+.tableContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.table{
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+  
+.tableContainer th,
+.tableContainer td {
+    padding: 0.5rem;
+    text-align: left;
+}
+  
