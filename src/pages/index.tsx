@@ -1,71 +1,60 @@
-import React, {useState} from 'react'
-import styles from '../styles/Contacts.module.css'; 
+import Container from "@/components/Container";
+import React, {FormEvent, useState} from 'react'
 
-  type Contact = {
-    name: string;
-    phone: string;
-  };
- function HomePage(){
-  const [contacts, setContacts] = useState<Contact[]>([
+export default function HomePage(){
+  const [nameInput, setNameInput] = useState('');
+  const [phoneInput, setPhoneInput] = useState('');
+  const [contacts, setContacts] = useState([
     {name: 'Anna Andersson' , phone: '044 1234567'},
     {name: 'Peter Petersson' , phone: '050 1234567'},
     {name: 'Johan Jansson' , phone: '040 7654321'}
-  ])
+  ]);
 
-  const [name, setName] = useState<string>('')
-  const [phone, setPhone] = useState<string>('')
+  const onAdd = (e: FormEvent) => {
+    e.preventDefault();
 
-  const addContact = () => {
-    const newContact = {name, phone};
-    setContacts([...contacts, newContact]);
-    setName('');
-    setPhone('');
-  };
+    setContacts([
+      ...contacts, 
+      {name: nameInput, phone: phoneInput}
+      
+    ])
+    setNameInput('');
+    setPhoneInput('');
 
-  const deleteContact = (phone: string) => {
-    const filteredContacts = contacts.filter((contact) => contact.phone !== phone);
-    setContacts(filteredContacts);
-  };
-
+  }
   return (
-  <div className={styles.tableContainer}>
-    <h1>Contacts</h1>
-    <table className={styles.table}>
-      <thead>
-        <tr>
-          <td>
-            <input type="text" value={name} placeholder="Name" onChange={(e) => setName(e.target.value)} />
-          </td>
-          <td>
-            <input type="text" value={phone} placeholder="Phone number" onChange={(e) => setPhone(e.target.value)} />
-          </td>
-          <td>
-            <button onClick={addContact}>Add</button>
-          </td>
-        </tr>
+      <Container>
+        <h1>Contacts</h1>
+        <form onSubmit={onAdd}>
+          <label>
+            <span>Name</span>
+            <input type="text" value={nameInput} onChange={(e) => setNameInput(e.target.value)} />
+          </label>
+          <label>
+            <span>Phone number</span>
+            <input type="text" value={phoneInput} onChange={(e) => setPhoneInput(e.target.value)} />
+          </label>
+          <button>Add</button>
+        </form>
 
-        <tr>
-          <th>Name</th>
-          <th>Phone number</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        {contacts.map((contact) => (
-          <tr key={contact.phone}>
-            <td>{contact.name}</td>
-            <td>{contact.phone}</td>
-            <td>
-              <button onClick={() => deleteContact(contact.phone)}>Delete</button>
-            </td>
-          </tr>
-        ))}
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone number</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map(contact => (
+              <tr>
+              <td>{contact.name}</td>
+              <td>{contact.phone}</td>
+            </tr>
+            ))}
+            
+          </tbody>
 
-
-      </tbody>
-    </table>
-  </div>
+        </table>
+      </Container>
   )
 }
-
-export default HomePage
