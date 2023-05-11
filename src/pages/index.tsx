@@ -1,4 +1,5 @@
 import Container from "@/components/Container";
+import Modal from "@/components/Modal";
 import { FormEvent, useEffect, useState } from "react";
 
 type ContactDefinition = {
@@ -7,6 +8,7 @@ type ContactDefinition = {
 }
 
 export default function HomePage() {
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false)
 
   const [nameInput, setNameInput] = useState('');
   const [phonenumberInput, setPhoneNumberInput] = useState('');
@@ -32,6 +34,7 @@ export default function HomePage() {
 
     setNameInput('');
     setPhoneNumberInput('');
+    setIsAddModalOpen(false);
 
     // Spara till localstorage
   }
@@ -47,6 +50,7 @@ export default function HomePage() {
   return (
     <Container>
       <h1>Contacts</h1>
+      <button onClick={() => setIsAddModalOpen(true)}>Add contact</button>
 
       <form onSubmit={onAdd}>
         <label>
@@ -79,6 +83,20 @@ export default function HomePage() {
           ))}
         </tbody>
       </table>
+
+      <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
+        <form onSubmit={onAdd}>
+        <label>
+          <span>Name</span>
+          <input type="text" value={nameInput} onChange={e => setNameInput(e.target.value)} />
+        </label>
+        <label>
+          <span>Phonenumber</span>
+          <input type="text" value={phonenumberInput} onChange={e => setPhoneNumberInput(e.target.value)} />
+        </label>
+        <button>Submit</button>
+      </form>
+      </Modal> 
     </Container>
   );
 }
