@@ -1,6 +1,7 @@
 import Container from "@/components/Container";
 import Modal from "@/components/Modal";
 import { FormEvent, useEffect, useState } from "react";
+import styles from '../styles/Contacts.module.css'; 
 
 type ContactDefinition = {
   name: string,
@@ -63,6 +64,7 @@ export default function HomePage() {
 
   return (
     <Container>
+      <div className={styles.tableContainer}>
       <h1>Contacts</h1>
       <button onClick={() => setIsAddModalOpen(true)}>Add contact</button>
     
@@ -78,7 +80,7 @@ export default function HomePage() {
         <button>Add</button>
       </form>
       
-      <table>
+      <table className={styles.table}>
         <thead>
           <tr>
             <th>Name</th>
@@ -97,6 +99,7 @@ export default function HomePage() {
           ))}
         </tbody>
       </table>
+      </div>
 
       <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
         <form onSubmit={onAdd}>
